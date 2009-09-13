@@ -1,0 +1,4 @@
+#reviews div.rating, #content div.rating {
+overflow:hidden;
+margin-bottom: 3px;
+}
