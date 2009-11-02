@@ -24,7 +24,7 @@
                 {if $reviews}
                 <div id='reviews' class="sidebarbox">
                     <h2>Latest Awards &amp; Reviews</h2>
-    
+
                     {foreach from=$reviews key=key item=review}
                         <h4 class="clear">{$review.pa_name}</h4>
                         <p><a href = "{$review.producturl}" title="More about {$review.productname}">{$review.productname}</a></p>
@@ -44,16 +44,16 @@ if ($num) {
         $productid = Jojo::getFormData('id',     0);
         $url       = Jojo::getFormData('url',    '');
         if (!empty($url)) {
-             $product = Jojo::selectRow("SELECT productid FROM {product} WHERE pr_url = ?", array($url));
+             $product = Jojo::selectRow("SELECT productid FROM {product} WHERE pr_url = ? and status = 'active'", array($url));
              $productid = $product['productid'];
         }
-        if (!empty($productid)) {    
+        if (!empty($productid)) {
             $productreviews = Jojo_Plugin_Jojo_cart_product_award::getProductAwards('', '', $productid);
             $smarty->assign('productreviews', $productreviews );
             $smarty->assign('productname', ($productreviews ? $productreviews[0]['productname'] : false ) );
         } else {
             $reviews = Jojo_Plugin_Jojo_cart_product_award::getProductAwards($num * 2, 0, '', 'date');
-            
+
             $smarty->assign('reviews', $reviews);
             $smarty->assign('reviewhome', Jojo_Plugin_Jojo_cart_product_award::_getPrefix('', $page->getValue('pg_language')) );
         }
@@ -63,8 +63,8 @@ if ($num) {
         shuffle($reviews);
         $reviews = array_slice($reviews, 0, $num);
         $smarty->assign('reviews', $reviews);
-    
+
         /* Get the prefix for reviews (can vary for multiple installs) for use in the theme template instead of hard coding it */
         $smarty->assign('reviewhome', Jojo_Plugin_Jojo_cart_product_award::_getPrefix('', $page->getValue('pg_language')) );
-    }    
+    }
 }
