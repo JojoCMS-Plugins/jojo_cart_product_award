@@ -31,14 +31,6 @@ foreach ($languages as $k => $v){
     Jojo::registerURI("$prefix/p[pagenum:([0-9]+)]",   'jojo_plugin_jojo_cart_product_award'); // "productawards/p2/" for pagination of product awards
 }
 
-
-/* Search Filter */
-Jojo::addFilter('jojo_search', 'search', 'jojo_cart_product_award');
-
-/* Content Filter */
-Jojo::addFilter('content', 'removesnip', 'jojo_cart_product_award');
-
-
 $_options[] = array(
     'id'          => 'productaward_perpage',
     'category'    => 'Products',
@@ -60,3 +52,14 @@ $_options[] = array(
     'options'     => '',
     'plugin'      => 'jojo_cart_product_award'
 );
+
+$_options[] = array(
+    'id'          => 'productaward_currentonly',
+    'category'    => 'Products',
+    'label'       => 'Current Product Awards only',
+    'description' => 'Limit awards/reviews on index page to those for currently available products only.',
+    'type'        => 'radio',
+    'default'     => 'yes',
+    'options'     => 'yes,no'
+);
+

@@ -28,7 +28,7 @@ $default_td[$table] = array(
         'td_name' => "product_award",
         'td_displayname' => "Review",
         'td_primarykey' => "productawardid",
-        'td_displayfield' => "pa_name",
+        'td_displayfield' => "pa_organisation",
         'td_categorytable' => "product",
         'td_categoryfield' => "productid",
         'td_filter' => "yes",
@@ -67,12 +67,23 @@ $default_fd[$table]['productid'] = array(
     );
 
 // title Field
-$default_fd[$table]['pa_name'] = array(
-        'fd_name' => "Title",
+$default_fd[$table]['pa_organisation'] = array(
+        'fd_name' => "Organisation",
         'fd_type' => "text",
         'fd_required' => "yes",
+        'fd_size' => "60",
+        'fd_help' => "The name of the organisation or publication who published/granted the review/award",
+        'fd_order' => $o++,
+        'fd_tabname' => "Content",
+    );
+
+// title Field
+$default_fd[$table]['pa_name'] = array(
+        'fd_name' => "Award Title",
+        'fd_type' => "text",
+        'fd_required' => "no",
         'fd_size' => "50",
-        'fd_help' => "Award title.",
+        'fd_help' => "Award title (if needed).",
         'fd_order' => $o++,
         'fd_tabname' => "Content",
     );
@@ -115,6 +126,41 @@ $default_fd[$table]['pa_body'] = array(
     );
 
 
+// title Field
+$default_fd[$table]['pa_author'] = array(
+        'fd_name' => "Author",
+        'fd_type' => "text",
+        'fd_required' => "no",
+        'fd_size' => "60",
+        'fd_help' => "The name of the person who conducted the review",
+        'fd_order' => $o++,
+        'fd_tabname' => "Content",
+    );
+
+// title Field
+$default_fd[$table]['pa_organisationlink'] = array(
+        'fd_name' => "Link",
+        'fd_type' => "url",
+        'fd_required' => "no",
+        'fd_size' => "60",
+        'fd_help' => "A link to the website of the organisation or publication who published/granted the review/award",
+        'fd_order' => $o++,
+        'fd_tabname' => "Content",
+    );
+
+// Published Date
+$default_fd[$table]['pa_date'] = array(
+        'fd_name' => "Date",
+        'fd_type' => "text",
+        'fd_default' => "",
+        'fd_size' => "60",
+        'fd_help' => "Date this review was published",
+        'fd_order' => $o++,
+        'fd_tabname' => "Content",
+        'fd_mode' => "standard",
+    );
+
+
 // Image Field
 $default_fd[$table]['pa_image'] = array(
         'fd_name' => "Image",
@@ -125,11 +171,11 @@ $default_fd[$table]['pa_image'] = array(
     );
 
 // Date Field
-$default_fd[$table]['pa_date'] = array(
+$default_fd[$table]['pa_dateadded'] = array(
         'fd_name' => "Date",
-        'fd_type' => "date",
-        'fd_default' => "NOW()",
-        'fd_help' => "Date the product was published (defaults to Today)",
+        'fd_type' => "unixdate",
+        'fd_default' => "",
+        'fd_help' => "Date this review was added to the site (defaults to Today)",
         'fd_order' => $o++,
         'fd_tabname' => "Content",
         'fd_mode' => "standard",

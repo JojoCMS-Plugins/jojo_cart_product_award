@@ -40,31 +40,12 @@
 $num = Jojo::getOption('productaward_num_sidebar', 3);
 
 if ($num) {
-    if ($page->getValue('pg_link') == 'jojo_plugin_jojo_cart_products_wine') {
-        $productid = Jojo::getFormData('id',     0);
-        $url       = Jojo::getFormData('url',    '');
-        if (!empty($url)) {
-             $product = Jojo::selectRow("SELECT productid FROM {product} WHERE pr_url = ? and status = 'active'", array($url));
-             $productid = $product['productid'];
-        }
-        if (!empty($productid)) {
-            $productreviews = Jojo_Plugin_Jojo_cart_product_award::getProductAwards('', '', $productid);
-            $smarty->assign('productreviews', $productreviews );
-            $smarty->assign('productname', ($productreviews ? $productreviews[0]['productname'] : false ) );
-        } else {
-            $reviews = Jojo_Plugin_Jojo_cart_product_award::getProductAwards($num * 2, 0, '', 'date');
+    /* Create latest Reviews/Awards array for sidebar: getProductAwards(x, start, categoryid) = list x# of articles */
+    $reviews = Jojo_Plugin_Jojo_cart_product_award::getProductAwards($num * 2, 0, '', 'date');
+    shuffle($reviews);
+    $reviews = array_slice($reviews, 0, $num);
+    $smarty->assign('reviews', $reviews);
 
-            $smarty->assign('reviews', $reviews);
-            $smarty->assign('reviewhome', Jojo_Plugin_Jojo_cart_product_award::_getPrefix('', $page->getValue('pg_language')) );
-        }
-    } else {
-        /* Create latest Reviews/Awards array for sidebar: getProductAwards(x, start, categoryid) = list x# of articles */
-        $reviews = Jojo_Plugin_Jojo_cart_product_award::getProductAwards($num * 2, 0, '', 'date');
-        shuffle($reviews);
-        $reviews = array_slice($reviews, 0, $num);
-        $smarty->assign('reviews', $reviews);
-
-        /* Get the prefix for reviews (can vary for multiple installs) for use in the theme template instead of hard coding it */
-        $smarty->assign('reviewhome', Jojo_Plugin_Jojo_cart_product_award::_getPrefix('', $page->getValue('pg_language')) );
-    }
+    /* Get the prefix for reviews (can vary for multiple installs) for use in the theme template instead of hard coding it */
+    $smarty->assign('reviewhome', Jojo_Plugin_Jojo_cart_product_award::_getPrefix('', $page->getValue('pg_language')) );
 }
