@@ -18,7 +18,7 @@ class Jojo_Plugin_Jojo_cart_product_award extends JOJO_Plugin
 {
 
     /* Gets $num awards/reviews sorted by date (desc) for use on homepages and sidebars */
-    public static function getProductAwards($num=false, $start = 0, $productid = false, $order = false) {
+    public static function getProductAwards($num=false, $start = 0, $productid = false, $order = false, $product=true) {
 
         global $page, $cart;
         if (_MULTILANGUAGE) $language = !empty($page->page['pg_language']) ? $page->page['pg_language'] : Jojo::getOption('multilanguage-default', 'en');
@@ -40,7 +40,7 @@ class Jojo_Plugin_Jojo_cart_product_award extends JOJO_Plugin
             $a['bodyplain']    = strip_tags($a['pa_body']);
             unset($a['pa_body_code']);
             $a['date']         = $a['pa_date'];
-            if ($a['productid'] && class_exists('JOJO_Plugin_Jojo_cart')) {
+            if ($product && $a['productid'] && class_exists('JOJO_Plugin_Jojo_cart')) {
                 foreach (JOJO_Plugin_Jojo_cart::getProductHandlers() as $productHandler) {
                     if (method_exists($productHandler, 'getItemsbyId')) {
                         $item = call_user_func($productHandler .'::getItemsById', $a['productid']);
